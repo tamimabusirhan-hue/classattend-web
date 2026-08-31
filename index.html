@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ClassAttend</title>
+    <!-- GitHub Pages has no server-side rewrites, so a deep link (e.g.
+         /teacher/roster) 404s on a hard refresh. 404.html redirects here
+         with the real path packed into the query string; this unpacks it
+         back into the URL before the SPA router boots. No-op everywhere
+         else (localhost, or a plain "/" load). See rafgraph/spa-github-pages. -->
+    <script>
+      (function (l) {
+        if (l.search[1] === "/") {
+          var decoded = l.search
+            .slice(1)
+            .split("&")
+            .map(function (s) {
+              return s.replace(/~and~/g, "&");
+            })
+            .join("?");
+          window.history.replaceState(null, null, l.pathname.slice(0, -1) + decoded + l.hash);
+        }
+      })(window.location);
+    </script>
+    <script type="module" crossorigin src="/classattend-web/assets/index-CAhK3nOR.js"></script>
+    <link rel="stylesheet" crossorigin href="/classattend-web/assets/index-DoAJmtnM.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
