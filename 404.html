@@ -6,9 +6,20 @@
     <!-- GitHub Pages 404s any deep link on hard refresh (no server-side
          rewrites). This packs the real path into a query string and
          redirects to the app root, which unpacks it -- see the matching
-         script in index.html. https://github.com/rafgraph/spa-github-pages -->
+         script in index.html. https://github.com/rafgraph/spa-github-pages
+
+         pathSegmentsToKeep is 0, not 1: the public-facing URL is the
+         Cloudflare Worker gate's own root domain
+         (classattend-web-gate.<account>.workers.dev/...), which has no
+         "/classattend-web" path segment at all -- the Worker only adds
+         that prefix invisibly, server-side, when it fetches from the
+         GitHub Pages origin. Leaving this at 1 (correct for visiting GH
+         Pages directly, wrong here) made every deep link/refresh loop
+         forever, re-wrapping its own already-packed query string on each
+         bounce -- caught by testing an actual deep link through the real
+         gate domain, not just the underlying GH Pages origin directly. -->
     <script>
-      var pathSegmentsToKeep = 1; // keep "/classattend-web"
+      var pathSegmentsToKeep = 0;
       var l = window.location;
       l.replace(
         l.protocol +
